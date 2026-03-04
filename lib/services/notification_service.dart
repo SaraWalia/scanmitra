@@ -144,38 +144,6 @@ class NotificationService {
     return true;
   }
 
-  Future<bool> scheduleQuickTest() async {
-    if (!_enabled) {
-      return false;
-    }
-
-    await _requestPermissions();
-
-    const androidDetails = AndroidNotificationDetails(
-      'event_reminders',
-      'Event Reminders',
-      channelDescription: 'Automatic reminders for upcoming itinerary events',
-      importance: Importance.max,
-      priority: Priority.high,
-    );
-
-    const iosDetails = DarwinNotificationDetails();
-
-    await Future<void>.delayed(const Duration(seconds: 5));
-    await _plugin.show(
-      id: 999999,
-      title: 'ScanMitra Test',
-      body: 'This is a 5-second test notification.',
-      notificationDetails: const NotificationDetails(
-        android: androidDetails,
-        iOS: iosDetails,
-      ),
-      payload: 'test',
-    );
-
-    return true;
-  }
-
   String _time(DateTime dt) {
     final h = dt.hour % 12 == 0 ? 12 : dt.hour % 12;
     final m = dt.minute.toString().padLeft(2, '0');
